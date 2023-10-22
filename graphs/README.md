@@ -8,12 +8,12 @@ Cada arquivo de grafo segue o seguinte formato:
 - As linhas seguintes contêm pares de vértices, indicando a existência de arestas entre eles.
 
 Exemplo de arquivo de grafo (`grafo_1.txt`):
-
+```
 3
 1 2
 2 3
 1 3
-
+```
 
 Neste exemplo, temos um grafo com 3 vértices e as seguintes arestas:
 - Aresta entre o vértice 1 e o vértice 2.
