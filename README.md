@@ -12,9 +12,9 @@ make
 
 ## Utilização
 
-Ao compilar utilizando o comando anterior, um executável `main.o` é criado. Em um terminal e estando na raiz do projeto, basta inserir o comando abaixo que o programa será executado. Note também que para utilizá-lo, deve-se informar o número do estudo de caso (será detalhado mais abaixo) e o tipo de representação desejada (l para lista de adjacência e m para matriz de adjacência). Vale ressaltar que para o funcionamento do programa, o grafo deve estar no diretório graphs e seu nome deve estar no formato `grafo_n.txt` (`n` deve ser substituido por um número). Mais detalhes podem ser encontrados acessando o diretório [graphs](https://github.com/FelipeVillela/teoria_dos_grafos_ufrj/tree/main/graphs).
+Ao compilar utilizando o comando anterior, um executável `main.o` é criado. Em um terminal e estando na raiz do projeto, basta inserir o comando abaixo que o programa será executado. Note também que para utilizá-lo, deve-se informar o número do estudo de caso (será detalhado mais abaixo) e o tipo de representação desejada (`l` para lista de adjacência e `m` para matriz de adjacência). Vale ressaltar que para o funcionamento do programa, o grafo deve estar no diretório graphs e seu nome deve estar no formato `grafo_n.txt` (`n` deve ser substituido por um número). Mais detalhes podem ser encontrados acessando o diretório [graphs](https://github.com/FelipeVillela/teoria_dos_grafos_ufrj/tree/main/graphs).
 
-No exemplo abaixo, o programa está sendo executado e o parâmetro 1 representa o número do estudo de caso e o parâmetro m se refere à representação do grafo como matriz de adjacência.
+No exemplo abaixo, o programa está sendo executando o estudo de caso de número 1 com o grafo representado em matriz de adjâcencias.
 
 ```bash
 ./main.o 1 m
