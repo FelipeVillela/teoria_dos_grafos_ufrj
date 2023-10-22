@@ -1,5 +1,3 @@
-# Pasta `graphs` - Arquivos de Grafo
-
 Esta pasta contém arquivos de grafo no formato `grafo_n.txt`, onde `n` é o número do grafo.
 
 ## Formato do Arquivo de Grafo
