@@ -30,7 +30,7 @@ O código presente no arquivo main.cpp contém uma função chamada test que exe
    Neste estudo de caso, o código mede o tempo de execução da busca em profundidade (DFS) em 10 iterações.
 
 3. **Determinação do Pai dos Vértices 10, 20 e 30**  
-   Este estudo de caso determina o pai dos vértices 10, 20 e 30 tanto na BFS quanto na DFS.
+   Este estudo de caso determina o pai dos vértices 10, 20 e 30 tanto na BFS quanto na DFS. O pai de um vértice é aquele que o descobriu na execução do algoritmo.
 
 4. **Medição da Distância entre Pares de Vértices**  
    Neste estudo de caso, o código mede a distância entre os pares de vértices (10,20), (10,30) e (20,30) usando a DFS.
