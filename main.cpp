@@ -342,18 +342,34 @@ void test(Graph& graph, int case_number) {
 
 int main(int argc, char *argv[]) {
     try {
-        if (argc != 2) {
-            printf("Usage: %s <number of test case>\n", argv[0]);
+        if (argc != 3) {
+            printf("Usage: %s <number of test case> <l for adjacency list, m for adjacency matrix>\n", argv[0]);
             return 1;
         }
 
         int case_number = atoi(argv[1]); //número do caso de estudo
+        char graph_type = argv[2][0];    // Tipo de grafo (l ou m)
+
+        if (graph_type != 'l' && graph_type != 'm') {
+            cerr << "Invalid graph type. Use 'l' for adjacency list or 'm' for adjacency matrix." << endl;
+            return 1;
+        }
 
         for (int i = 1; i <= 6; ++i) {
-            cout << "Testing Adjacency List Graph " << i << ":" << endl;
 
-            AdjacencyListGraph adj_list_graph("./graphs/grafo_" + to_string(i) + ".txt");
-            test(adj_list_graph, case_number);
+            if (graph_type == 'l') {
+                cout << "Testing Adjacency List Graph " << i << ":" << endl;
+
+                AdjacencyListGraph adj_list_graph("./graphs/grafo_" + to_string(i) + ".txt");
+                test(adj_list_graph, case_number);
+                
+            } else if (graph_type == 'm') {
+                cout << "Testing Adjacency Matrix Graph " << i << ":" << endl;
+
+                MatrixAdjacencyGraph adj_matrix_graph("./graphs/grafo_" + to_string(i) + ".txt");
+                test(adj_matrix_graph, case_number);
+
+            }
 
             cout << endl;
         }
