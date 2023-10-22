@@ -12,7 +12,7 @@ make
 
 ## Utilização
 
-Ao compilar utilizando o comando anterior, um executável main.o é criado. Em um terminal e estando na raiz do projeto, basta inserir o comando abaixo que o programa será executado. Note também que para utilizá-lo, deve-se informar o número do estudo de caso (será detalhado mais abaixo). Vale ressaltar que para o funcionamento do programa, o grafo deve estar no diretório graphs e seu nome deve estar no formato grafo_n.txt (n deve ser substituido por um número). Mais detalhes podem ser encontrados no arquivo README que está dentro do diretório.
+Ao compilar utilizando o comando anterior, um executável `main.o` é criado. Em um terminal e estando na raiz do projeto, basta inserir o comando abaixo que o programa será executado. Note também que para utilizá-lo, deve-se informar o número do estudo de caso (será detalhado mais abaixo). Vale ressaltar que para o funcionamento do programa, o grafo deve estar no diretório graphs e seu nome deve estar no formato `grafo_n.txt` (`n` deve ser substituido por um número). Mais detalhes podem ser encontrados acessando o diretório [graphs](https://github.com/FelipeVillela/teoria_dos_grafos_ufrj/tree/main/graphs).
 
 No exemplo abaixo, o programa está sendo executado e o parâmetro 1 representa o número do estudo de caso.
 
@@ -21,7 +21,7 @@ No exemplo abaixo, o programa está sendo executado e o parâmetro 1 representa 
 ```
 
 # Estudos de Caso
-O código presente no arquivo main.cpp contém uma função chamada test que executa diferentes estudos de caso de acordo com o número recebido como parâmetro na função.
+O código presente no arquivo `main.cpp` contém uma função chamada test que executa diferentes estudos de caso de acordo com o número recebido como parâmetro na função.
 
 1. **Medição do Tempo de Execução da BFS**  
    Neste estudo de caso, o código mede o tempo de execução da busca em largura (BFS) em 10 iterações.
