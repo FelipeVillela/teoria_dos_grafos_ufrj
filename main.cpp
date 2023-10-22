@@ -22,7 +22,7 @@ struct Graph {
         return nodes;
     }
 
-    vector<int> bfs(int start_node, int end_node) {
+    vector<int> bfs(int start_node, int end_node = -1) {
         auto visited = vector<int>(node_count + 1, 0);
         auto path = vector<int>();
         auto q = queue<int>();
@@ -53,7 +53,7 @@ struct Graph {
         return path;
     }
 
-    vector<int> dfs(int start_node, int end_node) {
+    vector<int> dfs(int start_node, int end_node = -1) {
         auto visited = vector<int>(node_count + 1, 0);
         auto path = vector<int>();
         auto s = stack<int>();
@@ -260,34 +260,41 @@ struct MatrixAdjacencyGraph : Graph {
 };
 
 
-void test(Graph& graph) {
+void test(Graph& graph, int case_number) {
+    // Essa função é utilizada para executar o estudo de caso de acordo com o número recebido
 
 
-//    {
-//        auto start = chrono::high_resolution_clock::now();
-//        for (int i = 1; i <= 10; ++i) {
-//            graph.bfs(i % graph.node_count + 1);
-//        }
-//        auto stop = chrono::high_resolution_clock::now();
-//
-//        auto duration = duration_cast<chrono::microseconds>(stop - start);
-//        cout << "Time taken by BFS: " << duration.count() / (1000.0 * 10) << " milliseconds" << endl;
-//    }
+    if (case_number == 1) {
+        // Medição do tempo de execução da BFS
+
+        auto start = chrono::high_resolution_clock::now();
+        for (int i = 1; i <= 10; ++i) {
+            graph.bfs(i % graph.node_count + 1);
+        }
+        auto stop = chrono::high_resolution_clock::now();
+
+        auto duration = duration_cast<chrono::microseconds>(stop - start);
+        cout << "Time taken by BFS: " << duration.count() / (1000.0 * 10) << " milliseconds" << endl;
+    }
 
 
-//    {
-//        auto start = chrono::high_resolution_clock::now();
-//        for (int i = 1; i <= 10; ++i) {
-//            graph.dfs(i % graph.node_count + 1, (i + 1) % graph.node_count + 1);
-//        }
-//        auto stop = chrono::high_resolution_clock::now();
-//
-//        auto duration = duration_cast<chrono::microseconds>(stop - start);
-//        cout << "Time taken by DFS: " << duration.count() / (1000.0 * 10) << " milliseconds" << endl;
-//    }
+    if (case_number == 2) {
+        // Medição do tempo de execução da DFS
+
+        auto start = chrono::high_resolution_clock::now();
+        for (int i = 1; i <= 10; ++i) {
+            graph.dfs(i % graph.node_count + 1, (i + 1) % graph.node_count + 1);
+        }
+        auto stop = chrono::high_resolution_clock::now();
+
+        auto duration = duration_cast<chrono::microseconds>(stop - start);
+        cout << "Time taken by DFS: " << duration.count() / (1000.0 * 10) << " milliseconds" << endl;
+    }
 
 
-    {
+     if (case_number == 3) {
+        // Determina o pai dos vértices 10, 20 e 30 tanto na BFS quanto na DFS
+
         cout << "BFS parent of vertex 10: " << graph.bfs(1, 10)[1] << endl;
         cout << "BFS parent of vertex 20: " << graph.bfs(2, 20)[1] << endl;
         cout << "BFS parent of vertex 30: " << graph.bfs(3, 30)[1] << endl;
@@ -298,42 +305,55 @@ void test(Graph& graph) {
     }
 
 
-    {
-//        cout << "Distance between vertices 10 and 20: " << graph.dfs(10, 20).size() << endl;
-//        cout << "Distance between vertices 10 and 30: " << graph.dfs(10, 30).size() << endl;
-//        cout << "Distance between vertices 20 and 30: " << graph.dfs(20, 30).size() << endl;
+     if (case_number == 4) {
+        // Medição da distância entre os pares de vértices (10,20), (10,30), (20,30)
+
+        cout << "Distance between vertices 10 and 20: " << graph.dfs(10, 20).size() << endl;
+        cout << "Distance between vertices 10 and 30: " << graph.dfs(10, 30).size() << endl;
+        cout << "Distance between vertices 20 and 30: " << graph.dfs(20, 30).size() << endl;
     }
 
 
-    {
-//        auto components = graph.connected_components();
-//        cout << "Number of connected components: " << components.size() << endl;
-//
-//        int max_size = 0, min_size = graph.node_count;
-//        for (const auto &component: components) {
-//            max_size = max(max_size, static_cast<int>(component.size()));
-//            min_size = min(min_size, static_cast<int>(component.size()));
-//        }
-//
-//        cout << "Size of the largest connected component: " << max_size << endl;
-//        cout << "Size of the smallest connected component: " << min_size << endl;
+    if (case_number == 5) {
+        // Obtém a quantidade de componentes conexas do grafo e qual o tamanho da maior e da menor componente
+
+        auto components = graph.connected_components();
+        cout << "Number of connected components: " << components.size() << endl;
+
+        int max_size = 0, min_size = graph.node_count;
+        for (const auto &component: components) {
+            max_size = max(max_size, static_cast<int>(component.size()));
+            min_size = min(min_size, static_cast<int>(component.size()));
+        }
+
+        cout << "Size of the largest connected component: " << max_size << endl;
+        cout << "Size of the smallest connected component: " << min_size << endl;
     }
 
 
-//    {
-//        int diameter = graph.diameter();
-//        cout << "Diameter of the graph: " << diameter << endl;
-//    }
+   if (case_number == 6) {
+        // Medição do diâmetro do grafo
+
+        int diameter = graph.diameter();
+        cout << "Diameter of the graph: " << diameter << endl;
+   }
 }
 
 
-int main() {
+int main(int argc, char *argv[]) {
     try {
+        if (argc != 2) {
+            printf("Usage: %s <number of test case>\n", argv[0]);
+            return 1;
+        }
+
+        int case_number = atoi(argv[1]); //número do caso de estudo
+
         for (int i = 1; i <= 6; ++i) {
             cout << "Testing Adjacency List Graph " << i << ":" << endl;
 
-            AdjacencyListGraph adj_list_graph("../grafo_" + to_string(i) + ".txt");
-            test(adj_list_graph);
+            AdjacencyListGraph adj_list_graph("./graphs/grafo_" + to_string(i) + ".txt");
+            test(adj_list_graph, case_number);
 
             cout << endl;
         }
