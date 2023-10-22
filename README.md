@@ -1,6 +1,6 @@
 # teoria_dos_grafos_ufrj
 
-Este repositório foi criado para fins academicos para o estudo de grafos. O arquivo main.cpp contém um código em C++ para realizar diferentes estudos de caso em grafos utilizando a representação do mesmo em forma de lista de adjacências e matriz de adjacências. O código utiliza a Biblioteca Padrão do C++ e fornece funcionalidades como busca em largura (BFS), busca em profundidade (DFS), cálculo de distâncias, determinação de componentes conexas e cálculo do diâmetro do grafo.
+Este repositório foi criado para fins academicos para o estudo de grafos. O arquivo main.cpp contém um código em C++ para realizar diferentes estudos de caso em grafos utilizando a representação na memória do grafo em forma de lista de adjacências e matriz de adjacências. O código utiliza a Biblioteca Padrão do C++ e fornece funcionalidades como busca em largura (BFS), busca em profundidade (DFS), cálculo de distâncias, determinação de componentes conexas e cálculo do diâmetro do grafo.
 
 ## Compilação
 
@@ -12,12 +12,12 @@ make
 
 ## Utilização
 
-Ao compilar utilizando o comando anterior, um executável `main.o` é criado. Em um terminal e estando na raiz do projeto, basta inserir o comando abaixo que o programa será executado. Note também que para utilizá-lo, deve-se informar o número do estudo de caso (será detalhado mais abaixo). Vale ressaltar que para o funcionamento do programa, o grafo deve estar no diretório graphs e seu nome deve estar no formato `grafo_n.txt` (`n` deve ser substituido por um número). Mais detalhes podem ser encontrados acessando o diretório [graphs](https://github.com/FelipeVillela/teoria_dos_grafos_ufrj/tree/main/graphs).
+Ao compilar utilizando o comando anterior, um executável `main.o` é criado. Em um terminal e estando na raiz do projeto, basta inserir o comando abaixo que o programa será executado. Note também que para utilizá-lo, deve-se informar o número do estudo de caso (será detalhado mais abaixo) e o tipo de representação desejada (l para lista de adjacência e m para matriz de adjacência). Vale ressaltar que para o funcionamento do programa, o grafo deve estar no diretório graphs e seu nome deve estar no formato `grafo_n.txt` (`n` deve ser substituido por um número). Mais detalhes podem ser encontrados acessando o diretório [graphs](https://github.com/FelipeVillela/teoria_dos_grafos_ufrj/tree/main/graphs).
 
-No exemplo abaixo, o programa está sendo executado e o parâmetro 1 representa o número do estudo de caso.
+No exemplo abaixo, o programa está sendo executado e o parâmetro 1 representa o número do estudo de caso e o parâmetro m se refere à representação do grafo como matriz de adjacência.
 
 ```bash
-./main.o 1
+./main.o 1 m
 ```
 
 # Estudos de Caso
