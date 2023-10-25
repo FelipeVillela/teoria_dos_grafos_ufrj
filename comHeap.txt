@@ -307,4 +307,28 @@ Time taken by Dijkstra com heap no node 11341: 155.375900 milliseconds
 
 Testing Graph 4:
 
+
+
 Testing Graph 4:
+Time taken by Dijkstra com heap no node 289384: 1556.711700 milliseconds
+Time taken by Dijkstra com heap no node 930887: 1570.965000 milliseconds
+Time taken by Dijkstra com heap no node 692778: 1566.873700 milliseconds
+Time taken by Dijkstra com heap no node 636916: 1563.247900 milliseconds
+Time taken by Dijkstra com heap no node 747794: 1579.815700 milliseconds
+Time taken by Dijkstra com heap no node 238336: 1566.379900 milliseconds
+Time taken by Dijkstra com heap no node 885387: 1566.910400 milliseconds
+Time taken by Dijkstra com heap no node 760493: 1560.500500 milliseconds
+Time taken by Dijkstra com heap no node 516650: 1561.402700 milliseconds
+Time taken by Dijkstra com heap no node 641422: 1572.383100 milliseconds
+
+Testing Graph 5:
+Time taken by Dijkstra com heap no node 5202363: 5519.653000 milliseconds
+Time taken by Dijkstra com heap no node 490028: 5532.914200 milliseconds
+Time taken by Dijkstra com heap no node 3368691: 5557.991000 milliseconds
+Time taken by Dijkstra com heap no node 2520060: 5458.012300 milliseconds
+Time taken by Dijkstra com heap no node 4897764: 5460.904500 milliseconds
+Time taken by Dijkstra com heap no node 7513927: 5466.343400 milliseconds
+Time taken by Dijkstra com heap no node 5180541: 5592.093100 milliseconds
+Time taken by Dijkstra com heap no node 383427: 5439.497800 milliseconds
+Time taken by Dijkstra com heap no node 4089173: 5455.834900 milliseconds
+Time taken by Dijkstra com heap no node 3455737: 5547.741300 milliseconds
