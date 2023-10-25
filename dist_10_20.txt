@@ -1,0 +1,20 @@
+
+Graph 1
+heap: 8.770000
+
+
+Graph 2
+heap: 11.730000
+
+
+Graph 3
+heap: 4.990000
+
+
+Graph 4
+heap: 10.520000
+
+
+Graph 5
+heap: 40.200001
+
