@@ -58,7 +58,7 @@ struct Graph {
         return nodes;
     }
 
-    vector<float> dijkstra_vector(int start, int end_node = -1) {
+    vector<float> dijkstra_vector(int start) {
         vector<float> dist(node_count + 1, numeric_limits<float>::max());
         vector<bool> visited(node_count + 1, false);
         dist[start] = 0;
@@ -83,7 +83,7 @@ struct Graph {
         return dist;
     }
 
-    vector<float> dijkstra_heap(int start, int end_node = -1) {
+    vector<float> dijkstra_heap(int start) {
         vector<float> dist(node_count + 1, numeric_limits<float>::max());
         priority_queue<pair<float, int>, vector<pair<float, int>>, greater<>> pq;
         dist[start] = 0;
@@ -124,66 +124,96 @@ void writeLineToFile(const string& filename, const string& line) {
 }
 
 
-void test(Graph& graph, int case_number, int graph_number=0) {
+void test(Graph& graph, int case_number, char queue_structure, int graph_number=0) {
     // Essa função é utilizada para executar o estudo de caso de acordo com o número recebido
     if (case_number == 1) {
 
         cout << to_string(graph.node_count) << endl;
             
         int startNode = 10;
-       vector<float> dist_v;
-       vector<float> dist_h;
-
+        vector<float> dist;
+        string structure_name;
 
        for (int endNode = 20; endNode <= 60; endNode += 10) {
             cout << "Distância de " << startNode << " até " << endNode << endl;
-            // dist_v = graph.dijkstra_vector(startNode, endNode);
-            dist_h = graph.dijkstra_heap(startNode, endNode);
 
-            // float float_dist_v = dist_v[endNode];
-            float float_dist_h = dist_h[endNode];
+            if (queue_structure == 'h') {
+                structure_name = 'heap';
+                dist = graph.dijkstra_heap(startNode);
+            }
+            if (queue_structure == 'v') {
+                structure_name = 'vector';
+                dist = graph.dijkstra_vector(startNode);
+            }
 
-            // cout << "vector: " + to_string(float_dist_v) << endl;
-            cout << "heap: " + to_string(float_dist_h) << endl;
+            float float_dist = dist[endNode];
 
+            cout << structure_name + ": " + to_string(float_dist) << endl;
 
-            // writeLineToFile("dist_" + to_string(startNode) + "_" + to_string(endNode) + ".txt", "\nGraph " + to_string(graph_number) + "\nvector: " + to_string(float_dist_v) + "\nheap: " + to_string(float_dist_h) + "\n");
-            writeLineToFile("dist_" + to_string(startNode) + "_" + to_string(endNode) + ".txt", "\nGraph " + to_string(graph_number) + "\nheap: " + to_string(float_dist_h) + "\n");
+            writeLineToFile("dist_" + to_string(startNode) + "_" + to_string(endNode) + ".txt", "\nGraph " + to_string(graph_number) + ": " + to_string(float_dist) + "\n");
         }
                 
             
     }
 
     if (case_number == 2) {
-        // Medição do tempo de execução da BFS
-        cout << to_string(graph.node_count) << endl;
+        // Medição do tempo de execução do dijkstra
 
-        for (int i = 1; i <= 10; ++i) {
+        int total_iterations = 10;
+        float total_vector_time = 0;
+        float total_heap_time = 0;
+        float duration_vector_ms;
+        float duration_heap_ms;
+
+        writeLineToFile("output_heap.txt", "\nGraph " + to_string(graph_number));
+        writeLineToFile("output_vector.txt", "\nGraph " + to_string(graph_number));
+
+
+        for (int i = 1; i <= total_iterations; ++i) {
             
-            int randomNode = (std::rand() % graph.node_count) + 1;
+            int randomNode = (rand() % graph.node_count) + 1;
 
-            auto start = chrono::high_resolution_clock::now();
+            // Vector
+            auto start_vector = chrono::high_resolution_clock::now();
             
             graph.dijkstra_vector(randomNode);
             
-            auto stop = chrono::high_resolution_clock::now();
+            auto stop_vector = chrono::high_resolution_clock::now();
 
-            auto duration = duration_cast<chrono::microseconds>(stop - start);
-            cout << "Time taken by Dijkstra sem heap no node " + to_string(randomNode) + ": " << duration.count() / (1000.0) << " milliseconds" << endl;
+            auto duration_vector = duration_cast<chrono::microseconds>(stop_vector - start_vector);
+            duration_vector_ms = duration_vector.count() / 1000.0;
+
+            total_vector_time += duration_vector_ms;
+
+            cout << "Time taken by Dijkstra with vector starting in node " + to_string(randomNode) + ": " << to_string(duration_vector_ms) << " milliseconds" << endl;
             
-            writeLineToFile("semHeap.txt", "Time taken by Dijkstra sem heap no node " + to_string(randomNode) + ": " + to_string(duration.count() / (1000.0)) + " milliseconds");
-        
-            auto start2 = chrono::high_resolution_clock::now();
+            writeLineToFile("output_vector.txt", "Time taken by Dijkstra with vector starting in node " + to_string(randomNode) + ": " + to_string(duration_vector_ms) + " milliseconds");
+            //end Vector
+
+            //Heap
+            auto start_heap = chrono::high_resolution_clock::now();
             
             graph.dijkstra_heap(randomNode);
             
-            auto stop2 = chrono::high_resolution_clock::now();
+            auto stop_heap = chrono::high_resolution_clock::now();
 
-            auto duration2 = duration_cast<chrono::microseconds>(stop2 - start2);
-            cout << "Time taken by Dijkstra com heap no node " + to_string(randomNode) + ": " << duration2.count() / (1000.0) << " milliseconds" << endl;
+            auto duration_heap = duration_cast<chrono::microseconds>(stop_heap - start_heap);
+            duration_heap_ms = duration_heap.count() / 1000.0;
+
+            total_heap_time += duration_heap_ms;
             
-            writeLineToFile("comHeap.txt", "Time taken by Dijkstra com heap no node " + to_string(randomNode) + ": " + to_string(duration2.count() / (1000.0)) + " milliseconds");
+            cout << "Time taken by Dijkstra with heap starting in node " + to_string(randomNode) + ": " << duration_heap_ms << " milliseconds" << endl;
+            
+            writeLineToFile("output_heap.txt", "Time taken by Dijkstra com heap no node " + to_string(randomNode) + ": " + to_string(duration_heap_ms) + " milliseconds");
+            //End heap
         }
+
+        writeLineToFile("output_vector.txt", "\nTotal exec time: " + to_string(total_vector_time) + " milliseconds");
+        writeLineToFile("output_vector.txt", "\nMean exec time: " + to_string(total_vector_time / total_iterations) + " milliseconds");
+
+        writeLineToFile("output_heap.txt", "\nTotal exec time: " + to_string(total_heap_time) + " milliseconds");
+        writeLineToFile("output_heap.txt", "\nMean exec time: " + to_string(total_heap_time / total_iterations) + " milliseconds");
+
     }
 
 
@@ -198,15 +228,38 @@ int main(int argc, char *argv[]) {
     // return 0;
 
     try {
+        if (argc != 3) {
+            printf("Usage: %s <number of test case> <v for vector, h for heap>\n", argv[0]);
+            return 1;
+        }
+
+        int case_number = atoi(argv[1]); //número do caso de estudo
+        char queue_structure = argv[2][0];    // Estrutura da fila grafo (v ou h)
+        string filename = "output.txt";
+
+        if (queue_structure != 'l' && queue_structure != 'h') {
+            cerr << "Invalid data structure. Use 'v' for vector or 'h' for heap." << endl;
+            return 1;
+        }
 
         for (int i = 1; i <= 5; ++i) {
-            cout << "Testing Graph " << i << ":" << endl;
 
-            // writeLineToFile("comHeap.txt", "\nTesting Graph " + to_string(i) + ":");
-            // writeLineToFile("semHeap.txt", "\nTesting Graph " + to_string(i) + ":");
+            if (queue_structure == 'h') {
+                cout << "Testing Graph " << i << " with heap:" << endl;
+
+                writeLineToFile(filename, "\nTesting Graph " + to_string(i) + " with heap:");
+
+            }
+
+            if (queue_structure == 'v') {
+                cout << "Testing Graph " << i << " with vector:" << endl;
+
+                writeLineToFile(filename, "\nTesting Graph " + to_string(i) + "with vector:");
+
+            }
 
             Graph g("./graphs/grafo_W_" + to_string(i) + ".txt");
-            test(g, 1, i);
+            test(g, case_number, queue_structure, i);     
 
             cout << endl;
         }
