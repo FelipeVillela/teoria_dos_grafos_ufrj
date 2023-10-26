@@ -1,3 +1,6 @@
+#ifndef GRAPH_H
+#define GRAPH_H
+
 #include <vector>
 #include <ranges>
 #include <numeric>
@@ -187,3 +190,5 @@ struct Graph {
         return components;
     }
 };
+
+#endif
