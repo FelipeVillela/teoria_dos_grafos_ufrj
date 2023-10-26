@@ -122,8 +122,6 @@ void test(WeightedGraph& graph, int case_number, char queue_structure, int graph
         writeLineToFile("output_heap.txt", "\nMean exec time: " + to_string(total_heap_time / total_iterations) + " milliseconds");
 
     }
-
-
 };
 
 
@@ -144,31 +142,41 @@ int main(int argc, char *argv[]) {
         char queue_structure = argv[2][0];    // Estrutura da fila grafo (v ou h)
         string filename = "output.txt";
 
-        if (queue_structure != 'l' && queue_structure != 'h') {
+        if (queue_structure != 'v' && queue_structure != 'h') {
             cerr << "Invalid data structure. Use 'v' for vector or 'h' for heap." << endl;
             return 1;
         }
 
-        for (int i = 1; i <= 5; ++i) {
+        if (case_number <= 2) {
+            for (int i = 1; i <= 5; ++i) {
 
-            if (queue_structure == 'h') {
-                cout << "Testing Graph " << i << " with heap:" << endl;
+                if (queue_structure == 'h') {
+                    cout << "Testing Graph " << i << " with heap:" << endl;
 
-                writeLineToFile(filename, "\nTesting Graph " + to_string(i) + " with heap:");
+                    writeLineToFile(filename, "\nTesting Graph " + to_string(i) + " with heap:");
 
+                }
+
+                if (queue_structure == 'v') {
+                    cout << "Testing Graph " << i << " with vector:" << endl;
+
+                    writeLineToFile(filename, "\nTesting Graph " + to_string(i) + "with vector:");
+
+                }
+
+                WeightedGraph g("./graphs/grafo_W_" + to_string(i) + ".txt");
+                test(g, case_number, queue_structure, i);
+
+                cout << endl;
             }
+        } else if (case_number == 3) {
+            auto graph = LabeledWeightedGraph("./graphs/rede_colaboracao.txt", "./graphs/rede_colaboracao_vertices.txt");
 
-            if (queue_structure == 'v') {
-                cout << "Testing Graph " << i << " with vector:" << endl;
-
-                writeLineToFile(filename, "\nTesting Graph " + to_string(i) + "with vector:");
-
-            }
-
-            WeightedGraph g("./graphs/grafo_W_" + to_string(i) + ".txt");
-            test(g, case_number, queue_structure, i);     
-
-            cout << endl;
+            cout << "Distance Dijkstra -> Turing: " << graph.labeled_dijkstra_heap("Edsger W. Dijkstra", "Alan M. Turing") << endl;
+            cout << "Distance Dijkstra -> Kruskal: " << graph.labeled_dijkstra_heap("Edsger W. Dijkstra", "J. B. Kruskal") << endl;
+            cout << "Distance Dijkstra -> Kleinberg: " << graph.labeled_dijkstra_heap("Edsger W. Dijkstra", "Jon M. Kleinberg") << endl;
+            cout << "Distance Dijkstra -> Tardos: " << graph.labeled_dijkstra_heap("Edsger W. Dijkstra", "Eva Tardos") << endl;
+            cout << "Distance Dijkstra -> Ratton: " << graph.labeled_dijkstra_heap("Edsger W. Dijkstra", "Daniel R. Figueiredo") << endl;
         }
 
     } catch (const exception& e) {

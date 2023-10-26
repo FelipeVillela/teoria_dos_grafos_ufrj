@@ -3,6 +3,7 @@
 #include <map>
 #include <fstream>
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 
@@ -20,22 +21,55 @@ struct LabeledWeightedGraph {
             throw runtime_error("Could not open the labels file");
         }
 
-        int u;
-
-        while (labels_file >> u) {
+        string line;
+        while (getline(labels_file, line)) {
+            int u;
             string label;
-            labels_file >> label;
-            label_to_id[label] = u;
+            char comma;
+
+            auto ss = stringstream(line);
+
+            if (ss >> u && ss >> comma && getline(ss, label)) {
+                label_to_id[label] = u;
+            } else {
+                cerr << "Failed to parse line: " << line << endl;
+            }
         }
 
         labels_file.close();
     }
 
     float labeled_dijkstra_vector(string start, string end) {
-        return graph.dijkstra_vector(label_to_id[start], label_to_id[end]);
+        auto start_id = label_to_id[start];
+        auto end_id = label_to_id[end];
+
+        if (start_id == 0) {
+            cerr << "(Vertex not found: " << start << ") ";
+            return -1;
+        }
+
+        if (end_id == 0) {
+            cerr << "(Vertex not found: " << end << ") ";
+            return -1;
+        }
+
+        return graph.dijkstra_vector(start_id, end_id);
     }
 
     float labeled_dijkstra_heap(string start, string end) {
+        auto start_id = label_to_id[start];
+        auto end_id = label_to_id[end];
+
+        if (start_id == 0) {
+            cerr << "(Vertex not found: " << start << ") ";
+            return -1;
+        }
+
+        if (end_id == 0) {
+            cerr << "(Vertex not found: " << end << ") ";
+            return -1;
+        }
+
         return graph.dijkstra_heap(label_to_id[start], label_to_id[end]);
     }
 };

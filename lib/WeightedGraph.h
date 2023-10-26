@@ -1,3 +1,6 @@
+#ifndef WEIGHTEDGRAPH_H
+#define WEIGHTEDGRAPH_H
+
 #include "Graph.h"
 #include <unordered_map>
 #include <fstream>
@@ -25,6 +28,7 @@ struct WeightedGraph : Graph {
 
         while (file >> u >> v >> w) {
             add_edge(u, v, w);
+            add_edge(v, u, w);
         }
 
         file.close();
@@ -50,7 +54,7 @@ struct WeightedGraph : Graph {
         return nodes;
     }
 
-    float dijkstra_vector(int start, int end) {
+    vector<float> dijkstra_vector(int start) {
         vector<float> dist(node_count + 1, numeric_limits<float>::max());
         vector<int> prev(node_count + 1, -1);
         vector<int> visited(node_count + 1, 0);
@@ -81,10 +85,14 @@ struct WeightedGraph : Graph {
             }
         }
 
-        return dist[end];
+        return dist;
     }
 
-    float dijkstra_heap(int start, int end) {
+    float dijkstra_vector(int start, int end) {
+        return dijkstra_vector(start)[end];
+    }
+
+    vector<float> dijkstra_heap(int start) {
         vector<float> dist(node_count + 1, numeric_limits<float>::max());
         priority_queue<pair<float, int>, vector<pair<float, int>>, greater<>> pq;
         dist[start] = 0;
@@ -106,6 +114,12 @@ struct WeightedGraph : Graph {
             }
         }
 
-        return dist[end];
+        return dist;
+    }
+
+    float dijkstra_heap(int start, int end) {
+        return dijkstra_heap(start)[end];
     }
 };
+
+#endif
