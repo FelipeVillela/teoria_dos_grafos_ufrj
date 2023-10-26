@@ -10,104 +10,11 @@
 #include <unordered_map>
 #include <limits>
 #include <set>
+#include "lib/WeightedGraph.h"
+#include "lib/LabeledWeightedGraph.h"
 
 using namespace std;
 
-struct Graph {
-    vector<unordered_map<int, float>> adj_list;
-    int node_count;
-
-    explicit Graph(const string& filename) {
-        auto file = ifstream(filename);
-
-        if (!file.is_open()) {
-            cerr << "Could not open the file!\n";
-            throw runtime_error("Could not open the file");
-        }
-
-        file >> node_count;
-        adj_list.resize(node_count + 1);
-
-        int u, v;
-        float w;
-
-        while (file >> u >> v >> w) {
-            add_edge(u, v, w);
-        }
-
-        file.close();
-    }
-
-    void add_edge(int u, int v, float w) {
-        adj_list[u][v] = w;
-    }
-
-    vector<int> get_neighbors(int node) {
-        auto neighbors = vector<int>();
-
-        for (const auto& [v, w] : adj_list[node]) {
-            neighbors.push_back(v);
-        }
-
-        return neighbors;
-    }
-
-    vector<int> get_nodes() {
-        auto nodes = vector<int>(node_count);
-        iota(nodes.begin(), nodes.end(), 1);
-        return nodes;
-    }
-
-    vector<float> dijkstra_vector(int start) {
-        vector<float> dist(node_count + 1, numeric_limits<float>::max());
-        vector<bool> visited(node_count + 1, false);
-        dist[start] = 0;
-
-        for (int i = 1; i <= node_count; ++i) {
-            int u = -1;
-            for (int j = 1; j <= node_count; ++j) {
-                if (!visited[j] && (u == -1 || dist[j] < dist[u])) {
-                    u = j;
-                }
-            }
-
-            visited[u] = true;
-
-            for (const auto& [v, w] : adj_list[u]) {
-                if (dist[u] + w < dist[v]) {
-                    dist[v] = dist[u] + w;
-                }
-            }
-        }
-
-        return dist;
-    }
-
-    vector<float> dijkstra_heap(int start) {
-        vector<float> dist(node_count + 1, numeric_limits<float>::max());
-        priority_queue<pair<float, int>, vector<pair<float, int>>, greater<>> pq;
-        dist[start] = 0;
-        pq.emplace(0, start);
-
-        while (!pq.empty()) {
-            auto [d, u] = pq.top();
-            pq.pop();
-
-            if (d > dist[u]) {
-                continue;
-            }
-
-            for (const auto& [v, w] : adj_list[u]) {
-                if (dist[u] + w < dist[v]) {
-                    dist[v] = dist[u] + w;
-                    pq.emplace(dist[v], v);
-                }
-            }
-        }
-
-        return dist;
-    }
-};
 
 void writeLineToFile(const string& filename, const string& line) {
     ofstream outputFile(filename, ios::app); // Abra o arquivo de saída em modo de anexação
@@ -124,7 +31,7 @@ void writeLineToFile(const string& filename, const string& line) {
 }
 
 
-void test(Graph& graph, int case_number, char queue_structure, int graph_number=0) {
+void test(WeightedGraph& graph, int case_number, char queue_structure, int graph_number=0) {
     // Essa função é utilizada para executar o estudo de caso de acordo com o número recebido
     if (case_number == 1) {
 
@@ -213,8 +120,6 @@ void test(Graph& graph, int case_number, char queue_structure, int graph_number=
         writeLineToFile("output_heap.txt", "\nMean exec time: " + to_string(total_heap_time / total_iterations) + " milliseconds");
 
     }
-
-
 };
 
 
@@ -231,19 +136,39 @@ int main(int argc, char *argv[]) {
         int case_number = atoi(argv[1]); //número do caso de estudo
         char queue_structure = argv[2][0];    // Estrutura da fila grafo (v ou h)
 
-        if (queue_structure != 'l' && queue_structure != 'h') {
+        if (queue_structure != 'v' && queue_structure != 'h') {
             cerr << "Invalid data structure. Use 'v' for vector or 'h' for heap." << endl;
             return 1;
-        }
+        } else if (case_number <= 2) {
+            for (int i = 1; i <= 5; ++i) {
 
-        for (int i = 1; i <= 5; ++i) {
+                if (queue_structure == 'h') {
+                    cout << "Testing Graph " << i << " with heap:" << endl;
 
-            cout << "Testing Graph " << i  << endl;
+                    writeLineToFile("output.txt", "\nTesting Graph " + to_string(i) + " with heap:");
 
-            Graph g("./graphs/grafo_W_" + to_string(i) + ".txt");
-            test(g, case_number, queue_structure, i);     
+                }
 
-            cout << endl;
+                if (queue_structure == 'v') {
+                    cout << "Testing Graph " << i << " with vector:" << endl;
+
+                    writeLineToFile("output.txt", "\nTesting Graph " + to_string(i) + "with vector:");
+
+                }
+
+                WeightedGraph g("./graphs/grafo_W_" + to_string(i) + ".txt");
+                test(g, case_number, queue_structure, i);
+
+                cout << endl;
+            }
+        } else if (case_number == 3) {
+            auto graph = LabeledWeightedGraph("./graphs/rede_colaboracao.txt", "./graphs/rede_colaboracao_vertices.txt");
+
+            cout << "Distance Dijkstra -> Turing: " << graph.labeled_dijkstra_heap("Edsger W. Dijkstra", "Alan M. Turing") << endl;
+            cout << "Distance Dijkstra -> Kruskal: " << graph.labeled_dijkstra_heap("Edsger W. Dijkstra", "J. B. Kruskal") << endl;
+            cout << "Distance Dijkstra -> Kleinberg: " << graph.labeled_dijkstra_heap("Edsger W. Dijkstra", "Jon M. Kleinberg") << endl;
+            cout << "Distance Dijkstra -> Tardos: " << graph.labeled_dijkstra_heap("Edsger W. Dijkstra", "Éva Tardos") << endl;
+            cout << "Distance Dijkstra -> Ratton: " << graph.labeled_dijkstra_heap("Edsger W. Dijkstra", "Daniel R. Figueiredo") << endl;
         }
 
     } catch (const exception& e) {
