@@ -175,7 +175,7 @@ int main(int argc, char *argv[]) {
             cout << "Distance Dijkstra -> Turing: " << graph.labeled_dijkstra_heap("Edsger W. Dijkstra", "Alan M. Turing") << endl;
             cout << "Distance Dijkstra -> Kruskal: " << graph.labeled_dijkstra_heap("Edsger W. Dijkstra", "J. B. Kruskal") << endl;
             cout << "Distance Dijkstra -> Kleinberg: " << graph.labeled_dijkstra_heap("Edsger W. Dijkstra", "Jon M. Kleinberg") << endl;
-            cout << "Distance Dijkstra -> Tardos: " << graph.labeled_dijkstra_heap("Edsger W. Dijkstra", "Eva Tardos") << endl;
+            cout << "Distance Dijkstra -> Tardos: " << graph.labeled_dijkstra_heap("Edsger W. Dijkstra", "Éva Tardos") << endl;
             cout << "Distance Dijkstra -> Ratton: " << graph.labeled_dijkstra_heap("Edsger W. Dijkstra", "Daniel R. Figueiredo") << endl;
         }
 
