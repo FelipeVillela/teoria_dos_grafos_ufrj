@@ -1,16 +1,19 @@
 # the compiler
 CC = g++-10
 
-# the build target executable:
-TARGET  = t2_tests
-
 # Flags
 LDFLAGS = -pthread -std=c++20
 
-all: $(TARGET)
+# List of targets (executables)
+TARGETS = t1_tests t2_tests
 
-$(TARGET): $(TARGET).cpp
-	$(CC) -o $(TARGET).o $(TARGET).cpp $(LDFLAGS)
+all: $(TARGETS)
+
+t1_tests: t1_tests.cpp
+	$(CC) -o t1_tests.o $< $(LDFLAGS)
+
+t2_tests: t2_tests.cpp
+	$(CC) -o t2_tests.o $< $(LDFLAGS)
 
 clean:
-	rm -f $(TARGET).o
+	rm -f $(TARGETS) $(TARGETS:=.o)
