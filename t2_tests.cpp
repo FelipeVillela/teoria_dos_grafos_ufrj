@@ -38,24 +38,39 @@ void test(WeightedGraph& graph, int case_number, char queue_structure, int graph
         cout << to_string(graph.node_count) << endl;
             
         int startNode = 10;
-        vector<pair<float, vector<int>>> dist;
-        float float_dist;
+        vector<pair<float, vector<int>>> dijkstra_result;
+        float dist;
+        string path;
 
         if (queue_structure == 'h') {
-            dist = graph.dijkstra_heap(startNode);
+            dijkstra_result = graph.dijkstra_heap(startNode);
         }
         if (queue_structure == 'v') {
-            dist = graph.dijkstra_vector(startNode);
+            dijkstra_result = graph.dijkstra_vector(startNode);
         }
 
        for (int endNode = 20; endNode <= 60; endNode += 10) {
+            // Distancias
             cout << "Distância de " << startNode << " até " << endNode << endl;
 
-            float_dist = dist[endNode].first;
+            dist = dijkstra_result[endNode].first;
 
-            cout << to_string(float_dist) << endl;
+            cout << to_string(dist) << endl;
 
-            writeLineToFile("dist_" + to_string(startNode) + "_" + to_string(endNode) + ".txt", "\nGraph " + to_string(graph_number) + ": " + to_string(float_dist) + "\n");
+            writeLineToFile("dist_" + to_string(startNode) + "_" + to_string(endNode) + ".txt", "\nGraph " + to_string(graph_number) + ": " + to_string(dist) + "\n");
+
+            // Caminho
+            cout << "Caminho de " << startNode << " para " << endNode << endl;
+
+            path = "";
+            for (auto node : dijkstra_result[endNode].second) {
+                path += to_string(node) + " - ";
+            }
+
+            cout << path << " ";
+
+            writeLineToFile("path_" + to_string(startNode) + "_" + to_string(endNode) + ".txt", "\nGraph " + to_string(graph_number) + ": " + path + "\n");
+            
         }
                 
             
@@ -64,7 +79,7 @@ void test(WeightedGraph& graph, int case_number, char queue_structure, int graph
     if (case_number == 2) {
         // Medição do tempo de execução do dijkstra
 
-        int total_iterations = 30;
+        int total_iterations = 100;
         float total_vector_time = 0;
         float total_heap_time = 0;
         float duration_vector_ms;
