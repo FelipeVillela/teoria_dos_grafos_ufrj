@@ -1,19 +1,15 @@
-Graph 1
-heap: 6.810000
+
+Graph 1: 6.810000
 
 
-Graph 2
-heap: 7.079999
+Graph 2: 7.079999
 
 
-Graph 3
-heap: 4.310000
+Graph 3: 4.310000
 
 
-Graph 4
-heap: 8.240000
+Graph 4: 8.240000
 
 
-Graph 5
-heap: 44.909996
+Graph 5: 44.909996
 
