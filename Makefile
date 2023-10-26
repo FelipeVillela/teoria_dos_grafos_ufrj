@@ -2,7 +2,7 @@
 CC = g++-10
 
 # the build target executable:
-TARGET  = tp2
+TARGET  = t2_tests
 
 # Flags
 LDFLAGS = -pthread -std=c++20
