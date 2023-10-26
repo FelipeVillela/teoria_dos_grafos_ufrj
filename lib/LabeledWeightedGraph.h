@@ -10,6 +10,7 @@ using namespace std;
 struct LabeledWeightedGraph {
     WeightedGraph graph;
     map<string, int> label_to_id;
+    vector<string> id_to_label;
 
     int node_count;
 
@@ -21,6 +22,8 @@ struct LabeledWeightedGraph {
             throw runtime_error("Could not open the labels file");
         }
 
+        id_to_label.resize(graph.node_count + 1);
+
         string line;
         while (getline(labels_file, line)) {
             int u;
@@ -31,6 +34,7 @@ struct LabeledWeightedGraph {
 
             if (ss >> u && ss >> comma && getline(ss, label)) {
                 label_to_id[label] = u;
+                id_to_label[u] = label;
             } else {
                 cerr << "Failed to parse line: " << line << endl;
             }
@@ -53,7 +57,13 @@ struct LabeledWeightedGraph {
             return -1;
         }
 
-        return graph.dijkstra_vector(start_id, end_id);
+        auto [distance, path] = graph.dijkstra_vector(start_id, end_id);
+
+        for (auto node : path) {
+            cout << id_to_label[node] << " -> ";
+        }
+
+        return distance;
     }
 
     float labeled_dijkstra_heap(string start, string end) {
@@ -70,6 +80,12 @@ struct LabeledWeightedGraph {
             return -1;
         }
 
-        return graph.dijkstra_heap(label_to_id[start], label_to_id[end]);
+        auto [distance, path] = graph.dijkstra_heap(start_id, end_id);
+
+        for (auto node : path) {
+            cout << id_to_label[node] << " -> ";
+        }
+
+        return distance;
     }
 };
