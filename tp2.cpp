@@ -132,15 +132,12 @@ void test(Graph& graph, int case_number, char queue_structure, int graph_number=
             
         int startNode = 10;
         vector<float> dist;
-        string structure_name;
         float float_dist;
 
         if (queue_structure == 'h') {
-            structure_name = 'heap';
             dist = graph.dijkstra_heap(startNode);
         }
         if (queue_structure == 'v') {
-            structure_name = 'vector';
             dist = graph.dijkstra_vector(startNode);
         }
 
@@ -160,7 +157,7 @@ void test(Graph& graph, int case_number, char queue_structure, int graph_number=
     if (case_number == 2) {
         // Medição do tempo de execução do dijkstra
 
-        int total_iterations = 100;
+        int total_iterations = 30;
         float total_vector_time = 0;
         float total_heap_time = 0;
         float duration_vector_ms;
@@ -186,7 +183,7 @@ void test(Graph& graph, int case_number, char queue_structure, int graph_number=
 
             total_vector_time += duration_vector_ms;
 
-            cout << "Time taken by Dijkstra with vector starting in node " + to_string(randomNode) + ": " << to_string(duration_vector_ms) << " milliseconds" << endl;
+            cout << to_string(i) + " - Time taken by Dijkstra with vector starting in node " + to_string(randomNode) + ": " << to_string(duration_vector_ms) << " milliseconds" << endl;
             
             writeLineToFile("output_vector.txt", "Time taken by Dijkstra with vector starting in node " + to_string(randomNode) + ": " + to_string(duration_vector_ms) + " milliseconds");
             //end Vector
@@ -203,7 +200,7 @@ void test(Graph& graph, int case_number, char queue_structure, int graph_number=
 
             total_heap_time += duration_heap_ms;
             
-            cout << "Time taken by Dijkstra with heap starting in node " + to_string(randomNode) + ": " << duration_heap_ms << " milliseconds" << endl;
+            cout << to_string(i) + " - Time taken by Dijkstra with heap starting in node " + to_string(randomNode) + ": " << duration_heap_ms << " milliseconds" << endl;
             
             writeLineToFile("output_heap.txt", "Time taken by Dijkstra with heap starting in node " + to_string(randomNode) + ": " + to_string(duration_heap_ms) + " milliseconds");
             //End heap
