@@ -70,6 +70,23 @@ struct LabeledWeightedGraph {
             return -1;
         }
 
-        return graph.dijkstra_heap(label_to_id[start], label_to_id[end]);
+        return graph.dijkstra_heap(start_id, end_id);
+    }
+
+    float labeled_dijkstra_path(string start, string end) {
+        auto start_id = label_to_id[start];
+        auto end_id = label_to_id[end];
+
+        if (start_id == 0) {
+            cerr << "(Vertex not found: " << start << ") ";
+            return -1;
+        }
+
+        if (end_id == 0) {
+            cerr << "(Vertex not found: " << end << ") ";
+            return -1;
+        }
+
+        return graph.dijkstra_heap(start_id, end_id);
     }
 };

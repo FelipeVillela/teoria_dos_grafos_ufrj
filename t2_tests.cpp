@@ -38,7 +38,7 @@ void test(WeightedGraph& graph, int case_number, char queue_structure, int graph
         cout << to_string(graph.node_count) << endl;
             
         int startNode = 10;
-        vector<float> dist;
+        vector<pair<float, vector<int>>> dist;
         float float_dist;
 
         if (queue_structure == 'h') {
@@ -51,7 +51,7 @@ void test(WeightedGraph& graph, int case_number, char queue_structure, int graph
        for (int endNode = 20; endNode <= 60; endNode += 10) {
             cout << "Distância de " << startNode << " até " << endNode << endl;
 
-            float_dist = dist[endNode];
+            float_dist = dist[endNode].first;
 
             cout << to_string(float_dist) << endl;
 
