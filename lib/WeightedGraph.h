@@ -126,12 +126,24 @@ struct WeightedGraph : Graph {
         return result;
     }
 
-    pair<float, vector<int>> dijkstra_vector(int start, int end) {
-        return dijkstra_vector(start)[end];
+    float dijkstra_vector(int start, int end) {
+        auto [distance, path] = dijkstra_vector(start)[end];
+
+        for (auto node : path) {
+            cout << node << " ";
+        }
+
+        return distance;
     }
 
-    pair<float, vector<int>> dijkstra_heap(int start, int end) {
-        return dijkstra_heap(start)[end];
+    float dijkstra_heap(int start, int end) {
+        auto [distance, path] = dijkstra_heap(start)[end];
+
+        for (auto node : path) {
+            cout << node << " ";
+        }
+
+        return distance;
     }
 };
 
