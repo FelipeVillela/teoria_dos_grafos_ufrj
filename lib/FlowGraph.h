@@ -46,9 +46,9 @@ struct FlowGraph : Graph {
     }
 
     float ford_fulkerson(int source, int sink) {
-        vector<vector<float>> residual_capacity(node_count + 1, vector<float>(node_count + 1, 0));
-        
-        // Inicializa o grafo residual
+        unordered_map<int, unordered_map<int, float>> residual_capacity;
+
+        // Inicializa residual capacity map
         for (int u = 1; u <= node_count; ++u) {
             for (const auto& [v, w] : adj_list[u]) {
                 residual_capacity[u][v] = w;
@@ -61,6 +61,8 @@ struct FlowGraph : Graph {
             vector<int> parent(node_count + 1, -1);
             queue<pair<int, float>> q;
             q.push({source, numeric_limits<float>::infinity()});
+            vector<bool> visited(node_count + 1, false);
+            visited[source] = true;
 
             // BFS para encontrar caminho aumentante
             while (!q.empty()) {
@@ -68,24 +70,22 @@ struct FlowGraph : Graph {
                 q.pop();
 
                 for (const auto& [neighbor, capacity] : adj_list[current]) {
-                    if (parent[neighbor] == -1 && residual_capacity[current][neighbor] > 0) {
+                    if (!visited[neighbor] && residual_capacity[current][neighbor] > 0) {
+                        visited[neighbor] = true;
                         float new_flow = min(flow, residual_capacity[current][neighbor]);
                         q.push({neighbor, new_flow});
                         parent[neighbor] = current;
 
                         if (neighbor == sink) {
-
                             max_flow += new_flow;
-                            int v = sink;
-                            while (v != source) {
-                                int u = parent[v];
-                                residual_capacity[u][v] -= new_flow;
-                                residual_capacity[v][u] += new_flow;
-                                v = u;
-                            }
+                            // Atualiza residual capacities ao longo do caminho
+                            update_residual_capacities(parent, source, sink, new_flow, residual_capacity);
                             break;
                         }
                     }
+                }
+                if (visited[sink]) {
+                    break;
                 }
             }
 
@@ -95,6 +95,16 @@ struct FlowGraph : Graph {
         }
 
         return max_flow;
+    }
+
+    void update_residual_capacities(vector<int>& parent, int source, int sink, float flow, unordered_map<int, unordered_map<int, float>>& residual_capacity) {
+        int v = sink;
+        while (v != source) {
+            int u = parent[v];
+            residual_capacity[u][v] -= flow;
+            residual_capacity[v][u] += flow;
+            v = u;
+        }
     }
 };
 
