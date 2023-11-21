@@ -45,7 +45,7 @@ struct FlowGraph : Graph {
         return neighbors;
     }
 
-    float ford_fulkerson(int source, int sink) {
+    float ford_fulkerson(int source, int sink, const string& flow_allocation_filename = "") {
         unordered_map<int, unordered_map<int, float>> residual_capacity;
 
         // Inicializa residual capacity map
@@ -94,6 +94,10 @@ struct FlowGraph : Graph {
             }
         }
 
+        if (!flow_allocation_filename.empty()) {
+            write_flow_allocation(flow_allocation_filename, residual_capacity);
+        }
+
         return max_flow;
     }
 
@@ -106,6 +110,26 @@ struct FlowGraph : Graph {
             v = u;
         }
     }
+
+    void write_flow_allocation(const string& filename, unordered_map<int, unordered_map<int, float>>& residual_capacity) {
+        ofstream output_file(filename);
+        if (!output_file.is_open()) {
+            cerr << "Could not open the output file!\n";
+            throw runtime_error("Could not open the output file");
+        }
+
+        output_file << "Edge\tFlow Allocation\n";
+
+        for (int u = 1; u <= node_count; ++u) {
+            for (const auto& [v, capacity] : adj_list[u]) {
+                float flow_allocation = capacity - residual_capacity[u][v];
+                output_file << "(" << u << " -> " << v << ")\t" << flow_allocation << "\n";
+            }
+        }
+
+        output_file.close();
+    }
+
 };
 
 #endif
