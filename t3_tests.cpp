@@ -19,13 +19,13 @@ using namespace std;
 void test(FlowGraph& graph, int graph_number=0, int iterations=10) {
     // Essa função é utilizada para executar o estudo de caso de acordo com o número recebido
     float max_flow;
+    int source = 1;
+    int sink = 2;
 
     auto start = chrono::high_resolution_clock::now();
     for (int i = 0; i <= iterations; ++i) {        
 
-        max_flow = graph.ford_fulkerson(1, 2); // 1 e 2 são respectivamente fonte e sumidouro        
-        // cout << to_string(graph_number) + " - max flow: " + to_string(max_flow) << endl;
-        // cout << to_string(graph_number) + " - duration: " + to_string(duration_ms) << endl;
+        max_flow = graph.ford_fulkerson(source, sink);
         
     }
     auto stop = chrono::high_resolution_clock::now();
