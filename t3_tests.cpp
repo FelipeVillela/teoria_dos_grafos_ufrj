@@ -23,7 +23,7 @@ void test(FlowGraph& graph, int graph_number=0, int iterations=10) {
     auto start = chrono::high_resolution_clock::now();
     for (int i = 0; i <= iterations; ++i) {        
 
-        max_flow = graph.ford_fulkerson(1, 2); // 1 e 2 são respectivamente fonte e sumidouro        
+        max_flow = graph.ford_fulkerson(1, 2).first; // 1 e 2 são respectivamente fonte e sumidouro        
         // cout << to_string(graph_number) + " - max flow: " + to_string(max_flow) << endl;
         // cout << to_string(graph_number) + " - duration: " + to_string(duration_ms) << endl;
         
