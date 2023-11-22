@@ -45,13 +45,13 @@ struct FlowGraph : Graph {
         return neighbors;
     }
 
-    float ford_fulkerson(int source, int sink, const string& flow_allocation_filename = "") {
-        unordered_map<int, unordered_map<int, float>> residual_capacity;
+    pair<float, unordered_map<int, unordered_map<int, float>>> ford_fulkerson(int source, int sink, const string& flow_allocation_filename = "") {
+        unordered_map<int, unordered_map<int, float>> residual_capacity, flow_allocation;
 
-        // Inicializa residual capacity map
         for (int u = 1; u <= node_count; ++u) {
             for (const auto& [v, w] : adj_list[u]) {
                 residual_capacity[u][v] = w;
+                flow_allocation[u][v] = 0;
             }
         }
 
@@ -64,7 +64,6 @@ struct FlowGraph : Graph {
             vector<bool> visited(node_count + 1, false);
             visited[source] = true;
 
-            // BFS para encontrar caminho aumentante
             while (!q.empty()) {
                 auto [current, flow] = q.front();
                 q.pop();
@@ -78,8 +77,7 @@ struct FlowGraph : Graph {
 
                         if (neighbor == sink) {
                             max_flow += new_flow;
-                            // Atualiza residual capacities ao longo do caminho
-                            update_residual_capacities(parent, source, sink, new_flow, residual_capacity);
+                            update_path(parent, source, sink, new_flow, residual_capacity, flow_allocation);
                             break;
                         }
                     }
@@ -95,39 +93,47 @@ struct FlowGraph : Graph {
         }
 
         if (!flow_allocation_filename.empty()) {
-            write_flow_allocation(flow_allocation_filename, residual_capacity);
+            write_flow_allocation(flow_allocation_filename, flow_allocation);
         }
 
-        return max_flow;
+        return {max_flow, flow_allocation};
     }
 
-    void update_residual_capacities(vector<int>& parent, int source, int sink, float flow, unordered_map<int, unordered_map<int, float>>& residual_capacity) {
+    void update_path(vector<int>& parent, int source, int sink, float flow, unordered_map<int, unordered_map<int, float>>& residual_capacity, unordered_map<int, unordered_map<int, float>>& flow_allocation) {
         int v = sink;
         while (v != source) {
             int u = parent[v];
             residual_capacity[u][v] -= flow;
             residual_capacity[v][u] += flow;
+            flow_allocation[u][v] += flow;
             v = u;
         }
     }
 
-    void write_flow_allocation(const string& filename, unordered_map<int, unordered_map<int, float>>& residual_capacity) {
+    void write_flow_allocation(const string& filename, unordered_map<int, unordered_map<int, float>>& flow_allocation) {
         ofstream output_file(filename);
         if (!output_file.is_open()) {
             cerr << "Could not open the output file!\n";
-            throw runtime_error("Could not open the output file");
+            throw runtime_error("Output file opening failed");
         }
 
         output_file << "Edge\tFlow Allocation\n";
-
         for (int u = 1; u <= node_count; ++u) {
-            for (const auto& [v, capacity] : adj_list[u]) {
-                float flow_allocation = capacity - residual_capacity[u][v];
-                output_file << "(" << u << " -> " << v << ")\t" << flow_allocation << "\n";
+            for (const auto& [v, flow] : flow_allocation[u]) {
+                if (flow > 0) {
+                    output_file << "(" << u << " -> " << v << ")\t" << flow << "\n";
+                }
             }
         }
-
         output_file.close();
+    }
+
+    float get_bottleneck(vector<int>& path, unordered_map<int, unordered_map<int, float>>& flow_allocation) {
+        float bottleneck = numeric_limits<float>::infinity();
+        for (int i = 0; i < path.size() - 1; ++i) {
+            bottleneck = min(bottleneck, flow_allocation[path[i]][path[i + 1]]);
+        }
+        return bottleneck;
     }
 
 };
