@@ -25,7 +25,7 @@ void test(FlowGraph& graph, int graph_number=0, int iterations=10) {
     auto start = chrono::high_resolution_clock::now();
     for (int i = 0; i <= iterations; ++i) {        
 
-        max_flow = graph.ford_fulkerson(source, sink);
+        max_flow = graph.ford_fulkerson(source, sink).first;
         
     }
     auto stop = chrono::high_resolution_clock::now();

@@ -2,7 +2,7 @@
 CC = g++-10
 
 # Flags
-LDFLAGS = -pthread -std=c++20
+LDFLAGS = -pthread -std=c++20 -O3
 
 # List of targets (executables)
 TARGETS = t1_tests t2_tests t3_tests
