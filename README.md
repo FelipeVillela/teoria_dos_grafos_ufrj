@@ -40,7 +40,7 @@ Ao compilar utilizando um dos comandos descritos anteriormente, o executável `t
 No exemplo abaixo, o programa está sendo executando o estudo de caso de número 1 com o grafo representado em matriz de adjâcencias.
 
 ```bash
-./main.o 1 m
+./t1_tests.o 1 m
 ```
 
 ### Estudos de Caso
@@ -75,7 +75,7 @@ Ao compilar utilizando um dos comandos descritos no tópico de compilação, o e
 No exemplo abaixo, o programa está sendo executando o estudo de caso de número 1 e a estrutura de heap para a lista de vértices visitados.
 
 ```bash
-./main.o 1 h
+./t2_tests.o 1 h
 ```
 
 ### Estudos de Caso
@@ -90,5 +90,33 @@ O código presente no arquivo `tp2_tests.cpp` contém uma função chamada `test
 3. **Distâncias e caminhos entre pesquisadores**  
    Aqui é utilizado um grafo que codifica o relacionamento entre pesquisadores que colaboraram. O objetivo é, dada uma lista de pesquisadores, encontrar a distância e o caminho com o autor do algoritmo desse estudo, Edsger W. Dijkstra.
 
+## Trabalho prático 2 - TP3
+
+No terceiro e último trabalho, a biblioteca deverá ser capaz de trabalhar com grafos direcionados e com pesos. Também foi implementado o algoritmo de Ford-Fulkerson que tem o objetivo de resolver o problema de alocação de fluxos em uma rede de fluxos e também encontrar o fluxo máximo.
+
+Uma rede de fluxos pode ser representada com um grafo direcionado com pesos, onde o peso da aresta representa a capacidade máxima de fluxo que pode passar por essa aresta. Outro ponto importante é que deve existir uma fonte e um destino. A fonte é um vértice com grau de entrada 0 e o destino tem grau de saída 0. Em outras palavras, da fonte apenas sai o fluxo enquanto no destino apenas recebe o fluxo.
+
+### Utilização
+
+Ao criar o arquivo utilizando um dos comandos descritos no tópico de compilação, o executável `tp3_tests.o` será criado. Em um terminal e estando na raiz do projeto, basta inserir o comando abaixo que o programa será executado.
+Este teste consiste em apenas um estudo de caso, portanto, não é preciso especificar o número do estudo de caso como nos testes anteriores, porém, existem parâmetros opcionais que serão descritos abaixo.
+
+`-i` número de execuções para cada grafo: é utilizado para calcular o tempo médio de execução. Caso não seja informado, o valor padrão é igual a 10.
+
+`-f` Parâmetro que define se será gerado ou não um arquivo de texto com as alocações de fluxo para cada grafo. Deve ser passado o número 1 para gerar o arquivo e 0 para não gerar. Caso não seja informado, o valor padrão é igual a 0.
+
+Vale ressaltar que para o funcionamento do programa, o grafo deve estar no diretório graphs e seu nome deve estar no formato `grafo_rf_n.txt` (`n` deve ser substituido por um número). Mais detalhes podem ser encontrados acessando o diretório [graphs](https://github.com/FelipeVillela/teoria_dos_grafos_ufrj/tree/main/graphs).
+
+No exemplo abaixo, o programa está sendo executando o algoritmo Floyd-Fulkerson 10 vezes e não irá gerar o arquivo com as alocações de fluxo. Apoós a execução, será retornado no terminal o fluxo máximo e a média do tempo de execução para cada grafo.
+
+```bash
+./t3_tests.o -i 10 -f 0
+```
+
+### Estudos de Caso
+O código presente no arquivo `tp3_tests.cpp` contém uma função chamada `test` que executa apenas o seguinte estudo de caso.
+
+1. **Fluxo máximo e tempo de execução do algoritmo Floyd-Fulkerson**  
+   O programa irá executar um número de vezes igual ao número informado no parâmetro ao executar o programa.
 
 
