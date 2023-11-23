@@ -61,17 +61,17 @@ Exemplo de arquivo de grafo (`grafo_rf_1.txt`):
 ```
 
 Neste exemplo, temos um grafo com 7 vértices e as seguintes arestas:
--Aresta partindo do vértice 1 para o vértice 3 com peso 5.
--Aresta partindo do vértice 1 para o vértice 5 com peso 3.
--Aresta partindo do vértice 3 para o vértice 7 com peso 3.
--Aresta partindo do vértice 5 para o vértice 3 com peso 2.
--Aresta partindo do vértice 5 para o vértice 7 com peso 2.
--Aresta partindo do vértice 5 para o vértice 4 com peso 4.
--Aresta partindo do vértice 6 para o vértice 3 com peso 5.
--Aresta partindo do vértice 6 para o vértice 2 com peso 5.
--Aresta partindo do vértice 7 para o vértice 6 com peso 4.
--Aresta partindo do vértice 7 para o vértice 4 com peso 1.
--Aresta partindo do vértice 4 para o vértice 2 com peso 2.
+- Aresta partindo do vértice 1 para o vértice 3 com peso 5.
+- Aresta partindo do vértice 1 para o vértice 5 com peso 3.
+- Aresta partindo do vértice 3 para o vértice 7 com peso 3.
+- Aresta partindo do vértice 5 para o vértice 3 com peso 2.
+- Aresta partindo do vértice 5 para o vértice 7 com peso 2.
+- Aresta partindo do vértice 5 para o vértice 4 com peso 4.
+- Aresta partindo do vértice 6 para o vértice 3 com peso 5.
+- Aresta partindo do vértice 6 para o vértice 2 com peso 5.
+- Aresta partindo do vértice 7 para o vértice 6 com peso 4.
+- Aresta partindo do vértice 7 para o vértice 4 com peso 1.
+- Aresta partindo do vértice 4 para o vértice 2 com peso 2.
 
 Note que neste exemplo que apenas arestas saem do vértice 1 enquanto o 2 apenas recebe. Eles são a fonte e o destino da rede de fluxo.
 
