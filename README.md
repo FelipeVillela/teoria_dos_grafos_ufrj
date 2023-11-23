@@ -92,7 +92,9 @@ O código presente no arquivo `tp2_tests.cpp` contém uma função chamada `test
 
 ## Trabalho prático 2 - TP3
 
-No terceiro e último trabalho, a biblioteca deverá ser capaz de trabalhar com grafos direcionados e com pesos. Também foi implementado o algoritmo de Floyd-Fulkerson
+No terceiro e último trabalho, a biblioteca deverá ser capaz de trabalhar com grafos direcionados e com pesos. Também foi implementado o algoritmo de Ford-Fulkerson que tem o objetivo de resolver o problema de alocação de fluxos em uma rede de fluxos e também encontrar o fluxo máximo.
+
+Uma rede de fluxos pode ser representada com um grafo direcionado com pesos, onde o peso da aresta representa a capacidade máxima de fluxo que pode passar por essa aresta. Outro ponto importante é que deve existir uma fonte e um destino. A fonte é um vértice com grau de entrada 0 e o destino tem grau de saída 0. Em outras palavras, da fonte apenas sai o fluxo enquanto no destino apenas recebe o fluxo.
 
 ### Utilização
 
@@ -112,7 +114,7 @@ No exemplo abaixo, o programa está sendo executando o algoritmo Floyd-Fulkerson
 ```
 
 ### Estudos de Caso
-O código presente no arquivo `tp3_tests.cpp` contém uma função chamada `test` que executa apenas um estudo de caso.
+O código presente no arquivo `tp3_tests.cpp` contém uma função chamada `test` que executa apenas o seguinte estudo de caso.
 
 1. **Fluxo máximo e tempo de execução do algoritmo Floyd-Fulkerson**  
    O programa irá executar um número de vezes igual ao número informado no parâmetro ao executar o programa.
